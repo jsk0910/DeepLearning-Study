@@ -6,3 +6,4 @@ tqdm
 torchsummary
 matplotlib
 opencv-python
+numpy==1.26.4
