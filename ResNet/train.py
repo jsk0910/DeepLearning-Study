@@ -13,7 +13,7 @@ from tqdm.auto import trange, tqdm
 from ResNet.resnet import *
 
 
-def resnet_train_cifar10(batch_size=50, learning_rate=0.0002, num_epoch=100, device="cpu", blocks=50):
+def resnet_train_cifar10(batch_size=50, learning_rate=0.0002, num_epoch=100, device="cpu", blocks=50, PATH=None):
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
     # define dataset
@@ -59,6 +59,6 @@ def resnet_train_cifar10(batch_size=50, learning_rate=0.0002, num_epoch=100, dev
 
         if i % 10 ==0:
             print(loss.item())
-            loss_arr.append(loss.item().cpu().detach().numpy())
+            loss_arr.append(loss.cpu().detach().numpy())
     
-    torch.save(model.state_dict, f"checkpoints/resnet{blocks}_{num_epoch}.pth")
+    torch.save(model.state_dict, PATH)
