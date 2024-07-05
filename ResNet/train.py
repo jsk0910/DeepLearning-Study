@@ -10,10 +10,10 @@ import matplotlib.pyplot as plt
 import tqdm
 from tqdm.auto import trange
 
-from resnet import *
+from ResNet.resnet import *
 
 
-def resnet_train_cifar10(batch_size=50, learning_rate=0.0002, num_epoch=100):
+def resnet_train_cifar10(batch_size=50, learning_rate=0.0002, num_epoch=100, device="cpu", blocks=50):
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
     # define dataset
@@ -27,8 +27,18 @@ def resnet_train_cifar10(batch_size=50, learning_rate=0.0002, num_epoch=100):
     # define classes
     classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
-    device = torch.device("cpu")
-    model = ResNet50().to(device)
+    device = torch.device(device)
+    model = None
+    if blocks == 18:
+        model = ResNet18().to(device)
+    if blocks == 34:
+        model = ResNet34().to(device)
+    if blocks == 50:
+        model = ResNet50().to(device)
+    if blocks == 101:
+        model = ResNet101().to(device)
+    if blocks == 152:
+        model = ResNet152().to(device)
     loss_func = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
