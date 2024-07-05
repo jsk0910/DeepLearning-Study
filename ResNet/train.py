@@ -19,8 +19,8 @@ num_epoch = 100
 transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
 # define dataset
-cifar10_train = datasets.CIFAR10(root="../Data/", train=True, transform=transform, target_transform=None, download=True)
-cifar10_test = datasets.CIFAR10(root="../Data/", train=False, transform=transform, target_transform=None, download=True)
+cifar10_train = datasets.CIFAR10(root="./Data/", train=True, transform=transform, target_transform=None, download=True)
+cifar10_test = datasets.CIFAR10(root="./Data/", train=False, transform=transform, target_transform=None, download=True)
 
 # define loader
 train_loader = DataLoader(cifar10_train,batch_size=batch_size, shuffle=True, num_workers=2, drop_last=True)
@@ -32,7 +32,7 @@ classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship'
 device = torch.device("cpu")
 model = ResNet50().to(device)
 loss_func = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(),lr=learning_rate)
+optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
 loss_arr = []
 for i in trange(num_epoch):
