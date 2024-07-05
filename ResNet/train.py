@@ -41,7 +41,7 @@ def resnet_train_cifar10(batch_size=50, learning_rate=0.0002, num_epoch=100, dev
     if blocks == 152:
         model = ResNet152().to(device)
 
-    summary(model, [3, 32, 32])
+    summary(model, (3, 32, 32))
     loss_func = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
