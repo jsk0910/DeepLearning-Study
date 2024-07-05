@@ -6,6 +6,7 @@ from torch.utils.data import DataLoader
 
 import numpy as np
 import matplotlib.pyplot as plt
+from torchsummary import summary
 
 import tqdm
 from tqdm.auto import trange
@@ -39,6 +40,8 @@ def resnet_train_cifar10(batch_size=50, learning_rate=0.0002, num_epoch=100, dev
         model = ResNet101().to(device)
     if blocks == 152:
         model = ResNet152().to(device)
+
+    summary(model, [3, 32, 32])
     loss_func = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
