@@ -8,8 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from torchsummary import summary
 
-import tqdm
-from tqdm.auto import trange
+from tqdm.auto import trange, tqdm
 
 from ResNet.resnet import *
 
@@ -46,6 +45,7 @@ def resnet_train_cifar10(batch_size=50, learning_rate=0.0002, num_epoch=100, dev
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
     loss_arr = []
+    model.train()
     for i in trange(num_epoch):
         for j,[image,label] in enumerate(train_loader):
             x = image.to(device)
@@ -58,5 +58,7 @@ def resnet_train_cifar10(batch_size=50, learning_rate=0.0002, num_epoch=100, dev
             optimizer.step()
 
         if i % 10 ==0:
-            print(loss)
-            loss_arr.append(loss.cpu().detach().numpy())
+            print(loss.item())
+            loss_arr.append(loss.item().cpu().detach().numpy())
+    
+    torch.save(model.state_dict, f"checkpoints/resnet{blocks}_{num_epoch}.pth")
