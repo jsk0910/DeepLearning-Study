@@ -21,8 +21,8 @@ def resnet_train_cifar10(batch_size=50, learning_rate=0.0002, num_epoch=100, dev
     cifar10_test = datasets.CIFAR10(root="./Data/", train=False, transform=transform, target_transform=None, download=True)
 
     # define loader
-    train_loader = DataLoader(cifar10_train,batch_size=batch_size, shuffle=True, num_workers=2, drop_last=True)
-    test_loader = DataLoader(cifar10_test,batch_size=batch_size, shuffle=False, num_workers=2, drop_last=True)
+    train_loader = DataLoader(cifar10_train,batch_size=batch_size, shuffle=True, num_workers=4, drop_last=True)
+    test_loader = DataLoader(cifar10_test,batch_size=batch_size, shuffle=False, num_workers=4, drop_last=True)
 
     # define classes
     classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
