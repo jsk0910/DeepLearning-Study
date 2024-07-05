@@ -30,6 +30,22 @@ test_loader = DataLoader(cifar10_test,batch_size=batch_size, shuffle=False, num_
 classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
 device = torch.device("cpu")
-model = ResNet(base_dim=64).to(device)
+model = ResNet50().to(device)
 loss_func = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(),lr=learning_rate)
+
+loss_arr = []
+for i in trange(num_epoch):
+    for j,[image,label] in enumerate(train_loader):
+        x = image.to(device)
+        y_= label.to(device)
+        
+        optimizer.zero_grad()
+        output = model.forward(x)
+        loss = loss_func(output,y_)
+        loss.backward()
+        optimizer.step()
+
+    if i % 10 ==0:
+        print(loss)
+        loss_arr.append(loss.cpu().detach().numpy())
